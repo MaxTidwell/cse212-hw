@@ -13,7 +13,16 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // place to store multiples and return
+        double[] result = new double[length];
+
+        // if loop that finds multiples and adds to new array length times
+        for (int i = 1; i <= length; ++i)
+        {
+            result[i - 1] = number * i; // result will return an array or list
+        }
+
+        return result; 
     }
 
     /// <summary>
@@ -29,5 +38,15 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // delete from end of list, then add to list, repeat while amount times
+        for (int i = 0; i < amount; ++i)
+        {
+            int LastIndex = data.Count - 1;// Get last Index
+
+            int number = data[LastIndex];  // saves number that will be deleted
+            data.RemoveAt(LastIndex);      // Delete at last Index
+            data.Insert(0, number);        // Insert at Index 0
+        }
     }
 }

@@ -1,34 +1,98 @@
-﻿/// <summary>
+﻿using System.Diagnostics;
+
+/// <summary>
 /// Maintain a Customer Service Queue.  Allows new customers to be 
 /// added and allows customers to be serviced.
 /// </summary>
 public class CustomerService {
     public static void Run() {
         // Example code to see what's in the customer service queue:
-        // var cs = new CustomerService(10);
-        // Console.WriteLine(cs);
+        //var cs = new CustomerService(10);
+        //Console.WriteLine(cs);
+
+
 
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: test max size of queue
+        // Expected Result: 10
         Console.WriteLine("Test 1");
 
+        var cs = new CustomerService(0) ;
+        Console.WriteLine($"Max Size should be 10: {cs}");
+
         // Defect(s) Found: 
+
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Queue a customer and display info
+        // Expected Result: displays a customer
         Console.WriteLine("Test 2");
+
+        cs.AddNewCustomer();
+        cs.ServeCustomer();
+
+        // Defect(s) Found: 
+
+
+        Console.WriteLine("=================");
+
+
+        // Test 3
+        // Scenario: Dequeue a customer in correct order and display info
+        // Expected Result: displays customer in same order as entered
+        Console.WriteLine("Test 3");
+
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        Console.WriteLine($"Before serving customers: {cs}");
+        cs.ServeCustomer();
+        cs.ServeCustomer();
+        Console.WriteLine($"After serving customers: {cs}");
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Add more Test Cases As Needed Below
+    
+    
+        // Test 4
+        // Scenario: Can I serve a customer if there is no customer?
+        // Expected Result: This should display some error message
+        Console.WriteLine("Test 4");
+
+        cs.ServeCustomer();
+        // Defect(s) Found: This found that I need to check the length in serve_customer and display an error message
+
+        Console.WriteLine("=================");
+
+
+
+        // Test 5
+        // Scenario: Is max queue size enforced?
+        // Expected Result: Should display error message when the 11th is added
+        Console.WriteLine("Test 5");
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+
+        Console.WriteLine($"Service Queue: {cs}");
+        // Defect(s) Found: This found that I need to do >= instead of > in AddNewCustomer
+
+        Console.WriteLine("=================");
+
     }
 
     private readonly List<Customer> _queue = new();
@@ -65,9 +129,9 @@ public class CustomerService {
     /// Prompt the user for the customer and problem information.  Put the 
     /// new record into the queue.
     /// </summary>
-    private void AddNewCustomer() {
+    protected void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {             // it needs to be a >= to verify the correct size
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -87,10 +151,16 @@ public class CustomerService {
     /// <summary>
     /// Dequeue the next customer and display the information.
     /// </summary>
-    private void ServeCustomer() {
+    protected void ServeCustomer() {
+        if (_queue.Count <= 0)  // Need to check if queue is empty
+        {
+            Console.WriteLine("No customers in Queue");
+        }
+        else{
+        var customer = _queue[0]; // order of saving and deleting was wrong
         _queue.RemoveAt(0);
-        var customer = _queue[0];
         Console.WriteLine(customer);
+        }
     }
 
     /// <summary>

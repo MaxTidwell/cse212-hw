@@ -45,6 +45,10 @@ public class TakingTurnsQueue
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
+            else if (person.Turns <= 0)      // no clause for infinite turns was given
+            {
+                _people.Enqueue(person);
+            }
 
             return person;
         }

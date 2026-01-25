@@ -21,8 +21,26 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var pairs = new HashSet<string>(words);
+        var result = new List<string>();
+        
+        foreach (string word in words)
+        {
+            if (word[0] == word[1])
+                continue;
+
+            string reverse = new string([word[1], word[0]]);
+
+            if (pairs.Contains(reverse))
+            {
+                if (word[0] < word[1])
+                {
+                    result.Add($"{word} & {reverse}");
+                }
+            }
+        }
+
+        return result.ToArray();
     }
 
     /// <summary>
@@ -42,7 +60,17 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+            
+            string degree = fields[3];
+
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -66,8 +94,42 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.ToLower().Replace(" ", "");
+        word2 = word2.ToLower().Replace(" ", "");
+
+        if (word1.Length != word2.Length)
+            return false;
+        
+        var counts = new Dictionary <char, int>();
+
+        foreach (char letter in word1)
+        {
+            if (counts.ContainsKey(letter))
+            {
+                counts[letter]++;
+            }
+            else
+            {
+                counts[letter] = 1;
+            }
+        }
+
+        foreach (char letter in word2)
+        {
+            if (!counts.ContainsKey(letter))
+            {
+                return false;
+            }
+            
+            counts[letter]--;
+            
+            if (counts[letter] < 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>

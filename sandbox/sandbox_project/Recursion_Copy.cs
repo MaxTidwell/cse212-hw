@@ -14,7 +14,7 @@ public static class Recursion
     /// </summary>
     public static int SumSquaresRecursive(int n)
     {
-        if (n <= 0)
+        if (n >= 0)
         {
             return 0;
         }
@@ -43,19 +43,7 @@ public static class Recursion
     /// </summary>
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
-        if (word.Length == size)
-        {
-            results.Add(word);
-            return;
-        }
-        else
-        {
-            for (var i = 0; i < letters.Length; i++)
-            {
-                var lettersLeft = letters.Remove(i, 1);
-                PermutationsChoose(results, lettersLeft , size, word + letters[i]);
-            }
-        }
+        // TODO Start Problem 2
     }
 
     /// <summary>
@@ -112,21 +100,10 @@ public static class Recursion
         if (s == 3)
             return 4;
 
-        if (remember == null)
-        {
-            remember = new Dictionary<int, decimal>();
-        }
-
-        if (remember.ContainsKey(s))
-        {
-            return remember[s];
-        }
+        // TODO Start Problem 3
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
-
-        remember[s] = ways;
-        
+        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
         return ways;
     }
 
@@ -145,19 +122,7 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
-        if (!pattern.Contains('*'))
-        {
-            results.Add(pattern);
-            return;
-        }
-        
-        int index = pattern.IndexOf('*');
-
-        string replaceZero = pattern[..index] + "0" + pattern[(index+1)..];
-        WildcardBinary(replaceZero, results);
-
-        string replaceOne = pattern[..index] + "1" + pattern[(index+1)..];
-        WildcardBinary(replaceOne, results);
+        // TODO Start Problem 4
     }
 
     /// <summary>
